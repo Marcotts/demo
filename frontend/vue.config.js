@@ -8,5 +8,9 @@ module.exports = defineConfig({
         changeOrigin: true
       }
     }
+  },
+  productionSourceMap: false,
+  css: {
+    sourceMap: true
   }
 })
