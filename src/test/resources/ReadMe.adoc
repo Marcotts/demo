@@ -1,0 +1,11 @@
+L'initialisation se fait dans cet ordre
+
+1) D'abord insère : data-local.sql
+- admin (id=1)
+- user1 (id=2)
+- user2 (id=3)
+- manager (id=4)
+
+2. Ensuite insère : `DatabaseInitializerLocal`
+- admin3 (id=5)
+- user3 (id=6)

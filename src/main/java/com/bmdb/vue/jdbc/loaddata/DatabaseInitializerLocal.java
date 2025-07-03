@@ -11,9 +11,9 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-@Profile("default")
+@Profile("local")
 @RequiredArgsConstructor
-public class DatabaseInitializer implements ApplicationListener<ApplicationReadyEvent> {
+public class DatabaseInitializerLocal implements ApplicationListener<ApplicationReadyEvent> {
 
     private static final String COLOR_GREEN_SUCCESS = "\u001B[32m✅\u001B[0m";
     private static final String COLOR_RED_ERROR = "\u001B[31m❌\u001B[0m";
@@ -45,10 +45,10 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
 
     private Mono<Void> insertRoles() {
         return databaseClient.sql("INSERT INTO roles (name) VALUES ($1)")
-                .bind(0, "ADMIN2")
+                .bind(0, "ADMIN3")
                 .then()
                 .then(databaseClient.sql("INSERT INTO roles (name) VALUES ($1)")
-                        .bind(0, "USER2")
+                        .bind(0, "USER3")
                         .then());
     }
 
@@ -57,17 +57,17 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
             INSERT INTO users (username, email, role_id)
             VALUES ($1, $2, (SELECT id FROM roles WHERE name = $3))
             """)
-                .bind(0, "admin2")
-                .bind(1, "admin2@example.com")
-                .bind(2, "ADMIN2")
+                .bind(0, "admin3")
+                .bind(1, "admin3@example.com")
+                .bind(2, "ADMIN3")
                 .then()
                 .then(databaseClient.sql("""
                 INSERT INTO users (username, email, role_id)
                 VALUES ($1, $2, (SELECT id FROM roles WHERE name = $3))
                 """)
-                        .bind(0, "user2")
-                        .bind(1, "user2@example.com")
-                        .bind(2, "USER2")
+                        .bind(0, "user3")
+                        .bind(1, "user3@example.com")
+                        .bind(2, "USER3")
                         .then());
     }
 }
