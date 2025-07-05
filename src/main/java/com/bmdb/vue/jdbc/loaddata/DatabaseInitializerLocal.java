@@ -44,11 +44,13 @@ public class DatabaseInitializerLocal implements ApplicationListener<Application
     }
 
     private Mono<Void> insertRoles() {
-        return databaseClient.sql("INSERT INTO roles (name) VALUES ($1)")
+        return databaseClient.sql("INSERT INTO roles (name, description) VALUES ($1, $2)")
                 .bind(0, "ADMIN3")
+                .bind(1, "Administrateur supplémentaire")
                 .then()
-                .then(databaseClient.sql("INSERT INTO roles (name) VALUES ($1)")
+                .then(databaseClient.sql("INSERT INTO roles (name, description) VALUES ($1, $2)")
                         .bind(0, "USER3")
+                        .bind(1, "Utilisateur supplémentaire")
                         .then());
     }
 
